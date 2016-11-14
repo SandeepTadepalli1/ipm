@@ -1,0 +1,20 @@
+
+<p>
+  <strong>Title:</strong>
+  <%= @ip_asset.title %>
+</p>
+
+<p>
+  <strong>Abstract:</strong>
+  <%= @ip_asset.abstract %>
+</p>
+
+<p>
+    <!-- <strong>IP Asset File:</strong> -->
+    <% if @ip_asset.ip_asset_file.file? %>
+        <%= link_to "Ip Asset" , @ip_asset.ip_asset_file.url %>
+    <% end %>
+</p>
+
+<%= link_to 'Edit', edit_ip_asset_path(@ip_asset) %> |
+<%= link_to 'Back', ip_assets_path %>

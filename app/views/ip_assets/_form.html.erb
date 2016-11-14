@@ -1,0 +1,43 @@
+<%= form_for(ip_asset) do |f| %>
+  <% if ip_asset.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(ip_asset.errors.count, "error") %> prohibited this ip_asset from being saved:</h2>
+
+      <ul>
+      <% ip_asset.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :abstract %>
+    <%= f.text_area :abstract %>
+  </div>
+  <div class="field">
+    <%= f.label :ip_asset_file %>
+    <%= f.file_field :ip_asset_file %>
+  </div><br />
+  
+  <div>
+    <%= f.label :Owner1 %>
+    <%= f.email_field :owner1_email %>
+  </div> <br />
+  
+  <div>
+    <%= f.label :Owner2 %>
+    <%= f.email_field :owner2_email %>
+  </div> <br />
+
+
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
