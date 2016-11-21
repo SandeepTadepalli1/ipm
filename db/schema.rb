@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161114222819) do
+ActiveRecord::Schema.define(version: 20161121095208) do
 
   create_table "ip_assets", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string   "title"
@@ -21,15 +21,16 @@ ActiveRecord::Schema.define(version: 20161114222819) do
     t.string   "ip_asset_file_content_type"
     t.integer  "ip_asset_file_file_size"
     t.datetime "ip_asset_file_updated_at"
-    t.integer  "user_id"
-    t.index ["user_id"], name: "index_ip_assets_on_user_id", using: :btree
+    t.string   "approval_status"
+    t.string   "visibility"
   end
 
   create_table "ownerships", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer  "user_id"
     t.integer  "ip_asset_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.float    "stakeholdingpercent", limit: 24
     t.index ["ip_asset_id"], name: "index_ownerships_on_ip_asset_id", using: :btree
     t.index ["user_id"], name: "index_ownerships_on_user_id", using: :btree
   end
@@ -51,6 +52,7 @@ ActiveRecord::Schema.define(version: 20161114222819) do
     t.string   "designation"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+    t.index ["username"], name: "index_users_on_username", unique: true, using: :btree
   end
 
 end

@@ -1,0 +1,10 @@
+<h1>User's Dashboard here</h1>
+<h2><%= @user.username %></h2>
+<h3><%= @user.email %></h3>
+<% if @user.id == current_user.id %>
+	<p>Displaying all the public IP assets of the owner</p>
+	<p>Todo Display all the Ip assets he is the Owner for</p>
+<% else %>
+	<p>You are not the owner of this. This is a read only info for you</p>
+	<p>@Todo -> Should view all the public IP assets from the Owner </p>
+<% end %> 

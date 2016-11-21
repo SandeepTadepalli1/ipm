@@ -1,43 +1,55 @@
-<%= form_for(ip_asset) do |f| %>
+<%= form_for(@ip_asset) do |ip_asset_form| %>
   <% if ip_asset.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(ip_asset.errors.count, "error") %> prohibited this ip_asset from being saved:</h2>
-
       <ul>
-      <% ip_asset.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
+        <% ip_asset.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
       </ul>
     </div>
   <% end %>
 
   <div class="field">
-    <%= f.label :title %>
-    <%= f.text_field :title %>
+    <%= ip_asset_form.label :title %>
+    <%= ip_asset_form.text_field :title %>
   </div>
 
   <div class="field">
-    <%= f.label :abstract %>
-    <%= f.text_area :abstract %>
+    <%= ip_asset_form.label :abstract %>
+    <%= ip_asset_form.text_area :abstract %>
   </div>
   <div class="field">
-    <%= f.label :ip_asset_file %>
-    <%= f.file_field :ip_asset_file %>
+    <%= ip_asset_form.label :ip_asset_file %>
+    <%= ip_asset_form.file_field :ip_asset_file %>
   </div><br />
-  
-  <div>
-    <%= f.label :Owner1 %>
-    <%= f.email_field :owner1_email %>
-  </div> <br />
-  
-  <div>
-    <%= f.label :Owner2 %>
-    <%= f.email_field :owner2_email %>
-  </div> <br />
 
+  <div class="field">
+    <%= ip_asset_form.label :visibility %> &nbsp;&nbsp;
+    <%= ip_asset_form.label :visibility,"Public", :value => "Public" %>
+    <%= ip_asset_form.radio_button :visibility,"public" %>&nbsp;&nbsp;
+    <%= ip_asset_form.label :visibility,"Private", :value => "Private" %>
+    <%= ip_asset_form.radio_button :visibility, "Private" %>
+  </div>
+
+
+  <% ip_asset_form.fields_for :ownerships do |ownership_form| %>
+    <p>
+      <%= ownership_form.label :stakeholdingpercent,"Stake Holding Percentage" %>
+      <%= ownership_form.number_field :stakeholdingpercent %>
+    </p>
+
+    <% ownership_form.fields_for :users do |user_form| %>
+      <p>
+      
+        <%= user_form.label :username, "User name" %>
+        <%= user_form.text_field :username %>
+      </p>
+    <% end %>
+  <% end %>
 
 
   <div class="actions">
-    <%= f.submit %>
+    <%= ip_asset_form.submit 'Create' %>
   </div>
 <% end %>
