@@ -18,8 +18,7 @@
     # GET /ip_assets/new
     def new
     @ip_asset = IpAsset.new
-    @ownerships = @ip_asset.ownerships.build
-    @user = @ownerships.build_user 
+    
     end
 
     # GET /ip_assets/1/edit
@@ -30,8 +29,8 @@
     # POST /ip_assets
     # POST /ip_assets.json
     def create
-    IpAsset.new(ip_assets_params)
-    
+        @ip_asset = IpAsset.new(ip_asset_params)
+     # @ip_asset = current_user.ip_assets.build(ip_asset_params)
     respond_to do |format|
       if @ip_asset.save
         format.html { redirect_to @ip_asset, notice: 'Ip asset was successfully created.' }
@@ -46,6 +45,7 @@
     # PATCH/PUT /ip_assets/1
     # PATCH/PUT /ip_assets/1.json
     def update
+    @ip_asset = IpAsset.find(params[:id])
     respond_to do |format|
       if @ip_asset.update(ip_asset_params)
         format.html { redirect_to @ip_asset, notice: 'Ip asset was successfully updated.' }
@@ -76,7 +76,7 @@
     # Never trust parameters from the scary internet, only allow the white list through.
     # params.require(:patient).permit(:id, appointments_attributes: [:id, :appointment_time, physician_attributes: [:id ] )
     def ip_asset_params
-      params.require(:ip_asset).permit(:title, :abstract, :ip_asset_file, :visibility,ownerships_attributes: [:id, :_destroy,  :stakeholdingpercent,user_attributes: [:id]])
+      params.require(:ip_asset).permit(:title, :abstract, :ip_asset_file, :visibility,ownerships_attributes: [:id, :_destroy,  :stakeholdingpercent, :user_id])
     end
 
 

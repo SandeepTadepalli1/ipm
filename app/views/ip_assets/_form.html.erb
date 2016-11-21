@@ -1,4 +1,4 @@
-<%= form_for(@ip_asset) do |ip_asset_form| %>
+<%= form_for(@ip_asset) do |f| %>
   <% if ip_asset.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(ip_asset.errors.count, "error") %> prohibited this ip_asset from being saved:</h2>
@@ -11,45 +11,47 @@
   <% end %>
 
   <div class="field">
-    <%= ip_asset_form.label :title %>
-    <%= ip_asset_form.text_field :title %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
   </div>
 
   <div class="field">
-    <%= ip_asset_form.label :abstract %>
-    <%= ip_asset_form.text_area :abstract %>
+    <%= f.label :abstract %>
+    <%= f.text_area :abstract %>
   </div>
   <div class="field">
-    <%= ip_asset_form.label :ip_asset_file %>
-    <%= ip_asset_form.file_field :ip_asset_file %>
+    <%= f.label :ip_asset_file %>
+    <%= f.file_field :ip_asset_file %>
   </div><br />
 
   <div class="field">
-    <%= ip_asset_form.label :visibility %> &nbsp;&nbsp;
-    <%= ip_asset_form.label :visibility,"Public", :value => "Public" %>
-    <%= ip_asset_form.radio_button :visibility,"public" %>&nbsp;&nbsp;
-    <%= ip_asset_form.label :visibility,"Private", :value => "Private" %>
-    <%= ip_asset_form.radio_button :visibility, "Private" %>
+    <%= f.label :visibility %> &nbsp;&nbsp;
+    <%= f.label :visibility,"Public", :value => "Public" %>
+    <%= f.radio_button :visibility,"public" %>&nbsp;&nbsp;
+    <%= f.label :visibility,"Private", :value => "Private" %>
+    <%= f.radio_button :visibility, "Private" %>
   </div>
 
-
-  <% ip_asset_form.fields_for :ownerships do |ownership_form| %>
-    <p>
-      <%= ownership_form.label :stakeholdingpercent,"Stake Holding Percentage" %>
-      <%= ownership_form.number_field :stakeholdingpercent %>
-    </p>
-
-    <% ownership_form.fields_for :users do |user_form| %>
-      <p>
-      
-        <%= user_form.label :username, "User name" %>
-        <%= user_form.text_field :username %>
-      </p>
-    <% end %>
+<div id="ownerships">
+  <% f.fields_for :ownerships do |ownership_form| %>
+   <%= render 'ownership_fields' ,f: ownership_form%>
   <% end %>
+  <div class="links">
+
+  <%= link_to_add_association 'Add Owner',f,:ownerships %>
+  </div>
+  </div>
+   
+    <%# ownership_form.fields_for :users do |user_form| %>
+      <!-- <p> -->
+      
+        <%# user_form.label :username, "User name" %>
+        <%# user_form.text_field :username %>
+      <!-- </p> -->
+    <%# end %>
 
 
   <div class="actions">
-    <%= ip_asset_form.submit 'Create' %>
+    <%= f.submit 'Create' %>
   </div>
 <% end %>
